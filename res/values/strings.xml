@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">GridImageSearch</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="search_prompt">Enter search query</string>
+    <string name="search_label">Search</string>
+    <string name="main_menu_name">Google Image Searcher</string>
+    <string name="image_title_label">Image Title</string>
+    <string name="title_activity_image_display">Full Image</string>
+    <string name="menuitem_settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="settings_title">Advanced search options</string>
+    <string name="settings_image_size">Image Size</string>
+    <string name="settings_color_filter">Color Filter</string>
+    <string name="settings_image_type">Image Type</string>
+    <string name="settings_site_filter">Site Filter</string>
+    <string name="settings_save">Save</string>
+    
+    <string-array name="size_array">
+        <item> </item>
+        <item> small </item>
+        <item> medium </item>
+        <item> large </item>
+        <item> extra-large </item>
+    </string-array>
+    
+    <string-array name="color_array">
+        <item> </item>
+        <item> black </item>
+        <item> blue </item>
+        <item> brown </item>
+        <item> gray </item>
+        <item> green </item>
+        <item> orange </item>
+        <item> pink </item>
+        <item> purple </item>
+        <item> red </item>
+        <item> teal </item>
+        <item> white </item>
+        <item> yellow </item>
+    </string-array>
+    
+    <string-array name="type_array">
+        <item> </item>
+        <item> faces </item>
+        <item> photo </item>
+        <item> clip art </item>
+        <item> line art </item>
+    </string-array>
+
+</resources>
