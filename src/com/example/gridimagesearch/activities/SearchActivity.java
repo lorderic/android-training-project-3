@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import com.example.gridimagesearch.R;
 import com.example.gridimagesearch.adapters.ImageResultsAdapter;
+import com.example.gridimagesearch.models.EndlessScrollListener;
 import com.example.gridimagesearch.models.ImageResult;
 import com.example.gridimagesearch.models.SearchFilters;
 import com.loopj.android.http.AsyncHttpClient;
@@ -34,15 +35,21 @@ public class SearchActivity extends Activity {
 	private ArrayList<ImageResult> imageResults;
 	private ImageResultsAdapter aImageResults;
 	private SearchFilters filters;
+	private AsyncHttpClient client;
+	
+	private String query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        
+        client = new AsyncHttpClient();
         setupViews();
         imageResults = new ArrayList<ImageResult>();
         aImageResults = new ImageResultsAdapter(this, imageResults);
         gvResults.setAdapter(aImageResults);
+        setEndlessScrollListener();
     }
 
 
@@ -54,9 +61,8 @@ public class SearchActivity extends Activity {
     }
     
     public void onImageSearch(View v){
-    	String query = etQuery.getText().toString();
+    	query = etQuery.getText().toString();
     	
-    	AsyncHttpClient client = new AsyncHttpClient();
         String searchURL = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=" + query + "&rsz=8" + getFilterAPI();
         client.get(searchURL, new JsonHttpResponseHandler(){
         	@Override
@@ -117,6 +123,38 @@ public class SearchActivity extends Activity {
 ;				
 			}
 		});
+    }
+    
+    private void setEndlessScrollListener(){
+    	gvResults.setOnScrollListener(new EndlessScrollListener(gvResults) {
+			
+			@Override
+			public void onLoadMore(int page, int totalItemCount) {
+				if (totalItemCount < 64 && query != null) {
+					loadDataFromAPI(totalItemCount);
+				}
+			}
+		});
+    	
+    }
+    
+    private void loadDataFromAPI(int totalItemCount){
+    	String searchURL = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=" + query + "&rsz=8" + getFilterAPI() + "&start=" + totalItemCount;
+        client.get(searchURL, new JsonHttpResponseHandler(){
+        	@Override
+        	public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+        		JSONArray imageResultJson = null;
+        		try {
+					imageResultJson = response.getJSONObject("responseData").getJSONArray("results");
+					
+					// When making changes to the adapter, it does modify the underlying data and need not notify
+					aImageResults.addAll(ImageResult.fromJSONArray(imageResultJson));
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+        		//Log.i("INFO", imageResults.toString());
+        	}
+        });
     }
     
     private String getFilterAPI(){
