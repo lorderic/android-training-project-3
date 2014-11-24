@@ -18,7 +18,7 @@ Completed user stories:
     * Site (espn.com)
  * [x] Required: Subsequent searches will have any filters applied to the search results
  * [x] Required: User can tap on any image in results to see the image full-screen
- * [x] User can scroll down “infinitely” to continue loading more image results (up to 8 pages, 64 images)
+ * [x] Required: User can scroll down “infinitely” to continue loading more image results (up to 8 pages, 64 images)
 
 Walkthrough of all user stories: 
 
