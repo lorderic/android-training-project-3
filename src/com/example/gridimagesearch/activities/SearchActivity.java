@@ -52,7 +52,6 @@ public class SearchActivity extends Activity {
         setEndlessScrollListener();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -68,6 +67,7 @@ public class SearchActivity extends Activity {
         	@Override
         	public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
         		JSONArray imageResultJson = null;
+        		gvResults.smoothScrollToPosition(0);
         		try {
 					imageResultJson = response.getJSONObject("responseData").getJSONArray("results");
 					imageResults.clear(); // in case where its a new search
